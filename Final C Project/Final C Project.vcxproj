@@ -110,6 +110,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Project_Field.c" />
+    <ClCompile Include="Project_Interface.c" />
+    <ClCompile Include="Project_Monster.c" />
+    <ClCompile Include="Project_Player.c" />
+    <ClCompile Include="Project_Queue.c" />
+    <ClCompile Include="Project_Source.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Project_Field.h" />
+    <ClInclude Include="Project_Interface.h" />
+    <ClInclude Include="Project_Monster.h" />
+    <ClInclude Include="Project_Player.h" />
+    <ClInclude Include="Project_Queue.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="field.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
