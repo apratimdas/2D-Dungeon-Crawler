@@ -14,7 +14,7 @@ void qinsert(queue **myqueue, monster *data) {
 	qnode *newnode = NULL;
 	qnode *tmp = NULL;
 	
-	printf
+	printf("Testing queues.");
 }
 
 //void qinsert(queue **myqueue, monster *data) {
