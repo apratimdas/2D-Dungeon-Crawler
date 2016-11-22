@@ -1,7 +1,9 @@
 
 #include "Project_Interface.h"
+#include "Project_Monster.h"
 #include "Project_Player.h"
 #include "Project_Field.h"
+#include "Project_Queue.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -12,6 +14,35 @@
 /**
  * 
  */
+
+void test_queue(void) {
+	queue *myq;
+	qnode *tmp = NULL;
+	monster m[3];
+
+	m[0].speed = 10;
+	m[1].speed = 12;
+	m[2].speed = 11;
+
+	myq = (queue*)malloc(sizeof(qnode));
+
+	myq->first = myq->last = NULL;
+
+	qinsert(&myq, &m[1]);
+	/*tmp = myq->first;
+
+	while (tmp != NULL) {
+		printf("Test monster %d\n", tmp->data->speed);
+		tmp = tmp->next;
+	}
+
+	qdelete(&myq);*/
+
+	free(myq);
+
+	printf("Thank you for using my program!\n");
+	printf("Best regards.\n");
+}
 
 void test(void) {
 	int count[2];
