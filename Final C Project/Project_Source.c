@@ -31,10 +31,13 @@
 //5 - new thing that you learn not covered in the class
 
 int main (void) {
+	test_queue();
 	test();
 	//printf("test");
 	//test
 	//test2
+	//test3
+	//test45
     //getchar();
     getchar();
     return 0;
