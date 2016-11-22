@@ -6,6 +6,6 @@
 
 void test_queue(void);
 void test(void);
-char keyActions(int index);
+char keyActions(int index, int count[]);
 
 #endif // _PROJECT_INTERFACE_H_

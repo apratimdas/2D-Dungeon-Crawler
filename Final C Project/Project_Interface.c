@@ -47,16 +47,13 @@ void test_queue(void) {
 void test(void) {
 	int count[2];
 	char choice;
-
+	floor = 0;
 	read_file("field.txt", count);
-
-	//printf("Test %d %d\n", count[0], count[1]);
-
 	do {
 		system("cls");
 		print_viewport();
 		printf("\nPress X to exit.\n");
-		choice = keyActions(0);
+		choice = keyActions(0, count);
 		printf("%c\n", choice);
 	} while (choice != 'X' && choice != 'x');
 	delete_field();
@@ -65,7 +62,7 @@ void test(void) {
 	printf("Best regards.\n");
 }
 
-char keyActions(int index) {
+char keyActions(int index, int count[]) {
 	char key;
 	int row = g_players[index].posx,
 		col = g_players[index].posy;
@@ -78,21 +75,25 @@ char keyActions(int index) {
 	case 'a':
 	case 75:
 		g_players[index].posy = (g_field[row][col - 1] == FIELD_GROUND_CHAR) ? col - 1 : col;
+		checkforladder(row, col - 1, count);
 		break;
 	case 'D':
 	case 'd':
 	case 77:
 		g_players[index].posy = (g_field[row][col + 1] == FIELD_GROUND_CHAR) ? col + 1 : col;
+		checkforladder(row, col + 1, count);
 		break;
 	case 'W':
 	case 'w':
 	case 72:
 		g_players[index].posx = (g_field[row - 1][col] == FIELD_GROUND_CHAR) ? row - 1 : row;
+		checkforladder(row-1, col, count);
 		break;
 	case 'S':
 	case 's':
 	case 80:
 		g_players[index].posx = (g_field[row + 1][col] == FIELD_GROUND_CHAR) ? row + 1 : row;
+		checkforladder(row+1, col, count);
 		break;
 	}
 
