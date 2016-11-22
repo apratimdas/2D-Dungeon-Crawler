@@ -48,9 +48,11 @@ void test(void) {
 	int count[2];
 	char choice;
 	floor = 0;
+	init();
 	read_file("field.txt", count);
 	do {
 		system("cls");
+		printf("Name:\t%s\nHP:\t%d\nAttack:\t%d\n\n", g_players[0].name, g_players[0].healthpoints, g_players[0].attack);
 		print_viewport();
 		printf("\nPress X to exit.\n");
 		choice = keyActions(0, count);
