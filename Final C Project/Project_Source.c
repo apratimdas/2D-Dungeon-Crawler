@@ -34,6 +34,7 @@ int main (void) {
 	test();
 	printf("test");
 	//test
+	//test2
     //getchar();
     getchar();
     return 0;
