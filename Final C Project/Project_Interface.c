@@ -19,7 +19,7 @@ void test(void) {
 
 	read_file("field.txt", count);
 
-	printf("Test %d %d\n", count[0], count[1]);
+	//printf("Test %d %d\n", count[0], count[1]);
 
 	do {
 		system("cls");

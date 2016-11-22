@@ -1,5 +1,5 @@
 
-#define _CRT_SECURE_NO_WARNINGS
+//#define _CRT_SECURE_NO_WARNINGS
 
 #include "Project_Interface.h"
 
@@ -32,7 +32,7 @@
 
 int main (void) {
 	test();
-	printf("test");
+	//printf("test");
 	//test
 	//test2
     //getchar();

@@ -65,7 +65,7 @@ void read_file(const char *file_name, int count[]) {
 				for (int i = 0; i < MAXPLAYERS; i++) {
 					g_players[i].posx = rows; // maybe create set functions
 					g_players[i].posy = cols;
-					printf("%d, %d, %d\n", rows, cols, g_players[i].posx);
+					//printf("%d, %d, %d\n", rows, cols, g_players[i].posx);
 				}
 			}
 			else {
@@ -98,11 +98,22 @@ void print_viewport(void) {
 	int size = VIEWPORT_SIZE,
 		row = g_players[0].posx,
 		col = g_players[0].posy;
+	//printf("%d%d", row, col);
 
 	/*for (int i = (row - size < 0 ? 0 : row - size); i < (row + size >= g_rows ? g_rows - 1 : row + size); i++) {
 		for (int j = (col - size < 0 ? 0 : col - size); j < (col + size >= g_cols ? g_cols - 1 : col + size); j++) {*/
 	for (int i = row - size; i < row + size; i++) {
+		if (i == row - size)
+		{
+			printf(" ");
+			for (int x = 0; x < 2*size; x++)
+				printf("-");
+			printf("\n");
+		}
 		for (int j = col - size; j < col + size; j++) {
+
+			if (j == col-size) printf("|");
+
 			if (i < 0 || j < 0 || i >= g_rows || j >= g_cols) {
 				printf(" ");
 			}
@@ -115,8 +126,15 @@ void print_viewport(void) {
 			else {
 				printf("%c", g_field[i][j]);
 			}
+			if (j == col + size - 1) printf("|");
 		}
-
+		if (i == row + size - 1)
+		{
+			printf("\n ");
+			for (int x = 0; x < 2*size ; x++)
+				printf("-");
+			printf("\n");
+		}
 		printf("\n");
 	}
 }

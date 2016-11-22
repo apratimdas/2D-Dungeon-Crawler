@@ -125,6 +125,7 @@
     <ClInclude Include="Project_Queue.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="field1.txt" />
     <Text Include="field.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

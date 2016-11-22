@@ -52,6 +52,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="field1.txt" />
     <Text Include="field.txt" />
   </ItemGroup>
 </Project>
