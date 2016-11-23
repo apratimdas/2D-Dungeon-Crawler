@@ -98,7 +98,6 @@ void print_viewport(void) {
 	int size = VIEWPORT_SIZE,
 		row = g_players[0].posx,
 		col = g_players[0].posy;
-	//printf("%d%d", row, col);
 
 	/*for (int i = (row - size < 0 ? 0 : row - size); i < (row + size >= g_rows ? g_rows - 1 : row + size); i++) {
 		for (int j = (col - size < 0 ? 0 : col - size); j < (col + size >= g_cols ? g_cols - 1 : col + size); j++) {*/
@@ -116,6 +115,10 @@ void print_viewport(void) {
 
 			if (i < 0 || j < 0 || i >= g_rows || j >= g_cols) {
 				printf(" ");
+			}
+			else if (g_field[i][j] == 'H')
+			{
+				printf("H");
 			}
 			else if (i == g_players[0].posx && j == g_players[0].posy) {
 				printf("%c", PLAYERMARKER);
@@ -146,6 +149,22 @@ void delete_field(void) {
 
     free(g_field);
     g_field = NULL;
+}
+
+void checkforladder(int row, int col, int count[])
+{
+	if (g_field[row][col] == 'H')
+	{
+		char temp[20] = "field";
+		floor++;
+		char level[2] = "0";
+		level[0] += floor;
+		strcat(temp, level);
+		strcat(temp,".txt");
+		printf("%s", temp);
+		delete_field();
+		read_file(temp, count);
+	}
 }
 
 // void dataInput(void) {

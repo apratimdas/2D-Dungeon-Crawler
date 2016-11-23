@@ -14,6 +14,7 @@
 char ** g_field;
 int g_rows,
     g_cols;
+int floor;
 
 void read_file(const char *file_name, int count[]);
 
