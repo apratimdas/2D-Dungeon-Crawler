@@ -32,7 +32,7 @@
 
 int main (void) {
 	test_queue();
-	test();
+	//test();
 	//printf("test");
 	//test
 	//test2

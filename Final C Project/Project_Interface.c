@@ -16,7 +16,7 @@
  */
 
 void test_queue(void) {
-	queue *myq;
+	queue *myq = NULL;
 	qnode *tmp = NULL;
 	monster m[3];
 
@@ -24,19 +24,21 @@ void test_queue(void) {
 	m[1].speed = 12;
 	m[2].speed = 11;
 
-	myq = (queue*)malloc(sizeof(qnode));
+	myq = (queue*)malloc(sizeof(queue));
 
 	myq->first = myq->last = NULL;
 
-	qinsert(&myq, &m[1]);
-	/*tmp = myq->first;
+	for (int i = 0; i < 3; i++) {
+		qinsert(&myq, &m[i]);
+	}
+	tmp = myq->first;
 
 	while (tmp != NULL) {
 		printf("Test monster %d\n", tmp->data->speed);
 		tmp = tmp->next;
 	}
 
-	qdelete(&myq);*/
+	qdelete(&myq);
 
 	free(myq);
 
