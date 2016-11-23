@@ -11,7 +11,7 @@
  */
 
 void qinsert(queue **myqueue, monster *data) {
-	qnode *newnode = NULL;
+	qnode *newnode = NULL; //
 	qnode *tmp = NULL;
 
 	newnode = (qnode*)malloc(sizeof(qnode));
