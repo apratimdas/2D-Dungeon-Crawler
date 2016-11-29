@@ -10,7 +10,11 @@
  * 
  */
 
-void qinsert(queue **myqueue, monster *data) {
+queue* q_new(void) {
+	return ( (queue*)malloc(sizeof(queue)) );
+}
+
+void q_insert(queue **myqueue, monster *data) {
 	qnode *newnode = NULL; //
 	qnode *tmp = NULL;
 
@@ -24,19 +28,21 @@ void qinsert(queue **myqueue, monster *data) {
 		(*myqueue)->first = (*myqueue)->last;
 	}
 	else {
-		if ((*myqueue)->last->data->speed > data->speed) { // inserts at the start
-			(*myqueue)->last->next = newnode;
+		if ((*myqueue)->first->data->speed < data->speed) { // inserts at the start
+			//(*myqueue)->last->next = newnode;
+			//newnode->next = (*myqueue)->last;
+			newnode->next = (*myqueue)->first;
 			(*myqueue)->first = newnode;
 		}
 		else {
-			if ((*myqueue)->last->data->speed < data->speed) {
+			if ((*myqueue)->last->data->speed > data->speed) {
 				(*myqueue)->last->next = newnode;
 				(*myqueue)->last = newnode;
 			}
 			else {
 				tmp = (*myqueue)->first;
 
-				while ((tmp->next) && (tmp->next)->data->speed <= data->speed) {
+				while ((tmp->next) && (tmp->next)->data->speed >= data->speed) {
 					tmp = tmp->next;
 				}
 				newnode->next = tmp->next;
@@ -46,7 +52,7 @@ void qinsert(queue **myqueue, monster *data) {
 	}
 }
 
-int qdelete(queue **myqueue) {
+int q_delete(queue **myqueue) {
 	qnode *tmp = NULL;
 
 	if ((*myqueue)->first == NULL && (*myqueue)->first == (*myqueue)->last) {
@@ -61,6 +67,8 @@ int qdelete(queue **myqueue) {
 	}
 
 	(*myqueue)->first = (*myqueue)->last = NULL;
+	free(*myqueue);
+	*myqueue = NULL;
 
 	return 0;
 }

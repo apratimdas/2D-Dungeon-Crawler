@@ -18,7 +18,8 @@ typedef struct Queue {
 	qnode *last;
 } queue;
 
-void qinsert(queue **myqueue, monster **data);
-int qdelete(queue **myqueue);
+queue* q_new(void);
+void q_insert(queue **myqueue, monster *data);
+int q_delete(queue **myqueue);
 
 #endif // _PROJECT_QUEUE_H_

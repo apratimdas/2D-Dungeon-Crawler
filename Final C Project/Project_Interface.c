@@ -24,7 +24,7 @@ void test_queue(void) {
 	m[1].speed = 12;
 	m[2].speed = 11;
 
-	myq = (queue*)malloc(sizeof(queue));
+	myq = q_new();
 
 	myq->first = myq->last = NULL;
 
@@ -40,7 +40,7 @@ void test_queue(void) {
 
 	qdelete(&myq);
 
-	free(myq);
+	//free(myq);
 
 	printf("Thank you for using my program!\n");
 	printf("Best regards.\n");
