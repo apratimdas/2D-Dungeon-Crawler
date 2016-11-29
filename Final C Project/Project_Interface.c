@@ -19,14 +19,13 @@ void test_queue(void) {
 	queue *myq = NULL;
 	qnode *tmp = NULL;
 	monster m[3];
+	monster *tmpmonster = NULL;
 
 	m[0].speed = 10;
 	m[1].speed = 12;
 	m[2].speed = 11;
 
 	myq = q_new();
-
-	myq->first = myq->last = NULL;
 
 	for (int i = 0; i < 3; i++) {
 		q_insert(&myq, &m[i]);
@@ -38,12 +37,17 @@ void test_queue(void) {
 		tmp = tmp->next;
 	}
 
+	for (int i = 0; i < 5; i++) {
+		tmpmonster = q_dequeue(&myq);
+
+		if (tmpmonster != NULL) {
+			printf("Test monster %d\n", tmpmonster->speed);
+		}
+	}
+
 	q_delete(&myq);
 
 	//free(myq);
-
-	printf("Thank you for using my program!\n");
-	printf("Best regards.\n");
 }
 
 void test(void) {
@@ -62,9 +66,6 @@ void test(void) {
 		printf("%c\n", choice);
 	} while (choice != 'X' && choice != 'x');
 	delete_field();
-
-	printf("Thank you for using my program!\n");
-	printf("Best regards.\n");
 }
 
 char keyActions(int index, int count[]) {

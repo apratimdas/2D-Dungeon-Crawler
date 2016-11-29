@@ -4,16 +4,27 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 /**
  * 
  */
 
+// returns head of the queue
 queue* q_new(void) {
-	return ( (queue*)malloc(sizeof(queue)) );
+	queue* tmp = (queue*)malloc(sizeof(queue));
+
+	tmp->first = tmp->last = NULL;
+
+	return tmp;
 }
 
+bool q_isEmpty(queue myqueue) {
+	return (myqueue.last == NULL);
+}
+
+// inserts data ordered by speed
 void q_insert(queue **myqueue, monster *data) {
 	qnode *newnode = NULL; //
 	qnode *tmp = NULL;
@@ -23,7 +34,7 @@ void q_insert(queue **myqueue, monster *data) {
 	newnode->data = data;
 	newnode->next = NULL;
 
-	if ((*myqueue)->last == NULL) { // empty queue
+	if (q_isEmpty(**myqueue)) { // empty queue
 		(*myqueue)->last = newnode;
 		(*myqueue)->first = (*myqueue)->last;
 	}
@@ -52,10 +63,47 @@ void q_insert(queue **myqueue, monster *data) {
 	}
 }
 
+//monster* q_cicle_queue(queue **myqueue) {
+//	monster* tmp;
+//
+//	tmp = q_dequeue(myqueue);
+//
+//	if (tmp) {
+//
+//	}
+//}
+
+monster* q_enqueue(queue **myqueue) {
+}
+
+monster* q_dequeue(queue **myqueue) {
+	monster* tmp = NULL;
+
+	if (q_isEmpty(**myqueue)) {
+		printf("Queue is Empty\n");
+	}
+	else {
+		tmp = (*myqueue)->first->data;
+
+		if ((*myqueue)->first == (*myqueue)->last) {
+			(*myqueue)->first = (*myqueue)->last = NULL;
+		}
+		else {
+			(*myqueue)->first = (*myqueue)->first->next;
+
+			/*if ((*myqueue)->first == NULL) {
+				(*myqueue)->first = (*myqueue)->last;
+			}*/
+		}
+	}
+
+	return tmp;
+}
+
 int q_delete(queue **myqueue) {
 	qnode *tmp = NULL;
 
-	if ((*myqueue)->first == NULL && (*myqueue)->first == (*myqueue)->last) {
+	if (!(*myqueue) || q_isEmpty(**myqueue)) {
 		// empty list;
 		return 1;
 	}
@@ -64,6 +112,7 @@ int q_delete(queue **myqueue) {
 		tmp = (*myqueue)->first;
 		(*myqueue)->first = (*myqueue)->first->next;
 		free(tmp);
+		tmp = NULL;
 	}
 
 	(*myqueue)->first = (*myqueue)->last = NULL;

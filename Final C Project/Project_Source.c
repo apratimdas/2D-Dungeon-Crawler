@@ -38,6 +38,11 @@ int main (void) {
 	//test2
 	//test3
 	//test45
+
+	printf("Thank you for playing our game!\n");
+	printf("We hope to see again soon.\n");
+	printf("Best regards.\n");
+
     //getchar();
     getchar();
     return 0;
