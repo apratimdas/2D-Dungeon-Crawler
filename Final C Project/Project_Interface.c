@@ -67,6 +67,44 @@ void test(void) {
 	printf("Best regards.\n");
 }
 
+//Need to add condition for blocked surrounding to prevent crash and collision detection with other monsters!!!
+void movemonsterdirection(int i, int dir)
+{
+	int x, y, flag = 0, ctr = 0;
+	x = g_spawns[i].posx;
+	y = g_spawns[i].posy;
+	do
+	{
+		switch (dir)
+		{
+		case 0:
+			g_spawns[i].posy = (g_field[x][y - 1] == FIELD_GROUND_CHAR) ? y - 1 : y;
+			flag = 1;
+			break;
+		case 1:
+			g_spawns[i].posy = (g_field[x][y + 1] == FIELD_GROUND_CHAR) ? y + 1 : y;
+			flag = 1;
+			break;
+		case 2:
+			g_spawns[i].posx = (g_field[x - 1][y] == FIELD_GROUND_CHAR) ? x - 1 : x;
+			flag = 1;
+			break;
+		case 3:
+			g_spawns[i].posx = (g_field[x + 1][y] == FIELD_GROUND_CHAR) ? x + 1 : x;
+			flag = 1;
+			break;
+		}
+		dir = rand() % 4;
+	} while (flag == 0);
+	
+}
+
+void movemonsters()
+{
+	srand(time(0));
+	for (int i = 0; i < MAXMONSTERS; i++) movemonsterdirection(i, rand() % 4);
+}
+
 char keyActions(int index, int count[]) {
 	char key;
 	int row = g_players[index].posx,
@@ -75,6 +113,7 @@ char keyActions(int index, int count[]) {
 	printf("Press a SPACE to wait a turn.\n");
 	key = _getch();
 	//Need to add monster movement here
+	movemonsters();
 	switch (key) {
 	case 'A':
 	case 'a':
