@@ -1,15 +1,21 @@
 
 #include "Project_Field.h"
 #include "Project_Player.h" // for starting position
-
+#include "Project_Monster.h" // for initial monster spawns
+#include <stdbool.h>
 #include <time.h>
 #include <string.h>
+#include<Windows.h>
+
 
 #define VIEWPORT_SIZE 5
 
 /**
  * Test
  */
+
+void monsterspawner();
+void resetmonsters();
 
 void read_file(const char *file_name, int count[]) {
     FILE *myfile;
@@ -74,27 +80,113 @@ void read_file(const char *file_name, int count[]) {
             cols++;
         }
     }
+	resetmonsters();
+	monsterspawner();
 }
 
+void resetmonsters()
+{
+	for (int i = 0; i < MAXMONSTERS; i++)
+	{
+		g_monsters[i].posx = -1;
+		g_monsters[i].posy = -1;
+	}
+}
+
+//Need to modify spawn location here
+void monsterspawner()
+{
+	int i, j, r, ctr = 0;
+	srand(time(0));
+	do
+	{
+		i = rand() % g_rows;
+		j = rand() % g_cols;
+		if (g_field[i][j] != '1');
+		else
+		{
+			r = rand();
+			if ((r % 15) >= 0 && (r % 15) <= 4)
+			{
+				//set monster with freq 5
+				g_monsters[3].posx = i;
+				g_monsters[3].posy = j;
+				g_field[i][j] = g_monsters[3].character;
+				printf("Monster 1\n");
+			}
+			else if ((r % 15) >= 5 && (r % 15) <= 8)
+			{
+				//freq 4
+				g_monsters[0].posx = i;
+				g_monsters[0].posy = j;
+				g_field[i][j] = g_monsters[0].character;
+				printf("Monster 2\n");
+			}
+			else if ((r % 15) >= 9 && (r % 15) <= 11)
+			{
+				g_monsters[4].posx = i;
+				g_monsters[4].posy = j;
+				g_field[i][j] = g_monsters[4].character;
+				printf("Monster 3\n");
+			}
+			else if ((r % 15) >= 12 && (r % 15) <= 14)
+			{
+				g_monsters[2].posx = i;
+				g_monsters[2].posy = j;
+				g_field[i][j] = g_monsters[2].character;
+				printf("Monster 4\n");
+			}
+			else
+			{
+				g_monsters[1].posx = i;
+				g_monsters[1].posy = j;
+				g_field[i][j] = g_monsters[1].character;
+				printf("Monster 5\n");
+			}
+			ctr++;
+		}
+
+	} while (ctr < 4);
+}
+
+bool checkformonster(int x, int y)
+{
+	for (int i = 0; i < MAXMONSTERS; i++) if (g_field[x][y] == g_monsters[i].character) return true;
+	return false;
+}
+
+/*
 void print_field(void) {
     for (int i = 0; i < g_rows; i++) {
         for (int j = 0; j < g_cols; j++) {
-			if (i == g_players[0].posx && j == g_players[0].posy) {
+			if (checkformonster(i, j))
+			{
+				//add color
+				//SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_RED);
+				//printf("%c", g_field[i][j]);
+				//SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
+			}
+			else if (i == g_players[0].posx && j == g_players[0].posy) {
 				printf("%c", PLAYERMARKER);
 			}
             else if (g_field[i][j] == '0' || g_field[i][j] == '1' || g_field[i][j] == 'S') {
                 printf(" ");
             }
             else {
-                printf("%c", g_field[i][j]);
+				//SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_RED);
+                //printf("%c", g_field[i][j]);
             }
         }
 
         printf("\n");
     }
 }
+*/
 
 void print_viewport(void) {
+
+	HANDLE h;
+	h = GetStdHandle(STD_OUTPUT_HANDLE);
 	int size = VIEWPORT_SIZE,
 		row = g_players[0].posx,
 		col = g_players[0].posy;
@@ -105,36 +197,46 @@ void print_viewport(void) {
 		if (i == row - size)
 		{
 			printf(" ");
-			for (int x = 0; x < 2*size; x++)
+			for (int x = 0; x < 6*size + 3; x++)
 				printf("-");
 			printf("\n");
 		}
 		for (int j = col - size; j < col + size; j++) {
 
-			if (j == col-size) printf("|");
+			if (j == col-size) printf(" | ");
 
 			if (i < 0 || j < 0 || i >= g_rows || j >= g_cols) {
-				printf(" ");
+				printf("   ");
 			}
 			else if (g_field[i][j] == 'H')
 			{
-				printf("H");
+				SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN | BACKGROUND_GREEN);
+				printf(" H ");
+				SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
+			}
+			else if (checkformonster(i, j))					//Fix color bug (Sometimes doesnt appear for some of the monsters)
+			{
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_RED);
+				printf(" %c ", g_field[i][j]);
+				SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 			}
 			else if (i == g_players[0].posx && j == g_players[0].posy) {
-				printf("%c", PLAYERMARKER);
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_BLUE);
+				printf(" %c ", PLAYERMARKER);
+				SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 			}
 			else if (g_field[i][j] == '0' || g_field[i][j] == '1' || g_field[i][j] == 'S') {
-				printf(" ");
+				printf("   ");
 			}
 			else {
-				printf("%c", g_field[i][j]);
+				printf(" %c ", g_field[i][j]);
 			}
 			if (j == col + size - 1) printf("|");
 		}
 		if (i == row + size - 1)
 		{
 			printf("\n ");
-			for (int x = 0; x < 2*size ; x++)
+			for (int x = 0; x < 6*size + 3 ; x++)
 				printf("-");
 			printf("\n");
 		}

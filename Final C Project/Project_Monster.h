@@ -4,10 +4,11 @@
 #ifndef _PROJECT_MONSTER_H_
 #define _PROJECT_MONSTER_H_
 
-#define MAXMONSTERS 1
+#define MAXMONSTERS 5
 
 typedef struct Monster {
     char name[25];
+	char character;
     int healthpoints;
     int level;
     int experience;
@@ -17,6 +18,7 @@ typedef struct Monster {
     int range;
     int posx;
     int posy;
+	int frequency;
 } monster;
 
 monster g_monsters[MAXMONSTERS];

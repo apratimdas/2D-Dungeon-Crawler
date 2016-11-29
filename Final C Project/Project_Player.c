@@ -5,7 +5,7 @@
 #include <string.h>
 #include "Project_Player.h"
 
-void init()
+void init_player()
 {
 	for (int i = 0; i < MAXPLAYERS; i++)
 	{

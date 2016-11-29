@@ -50,7 +50,8 @@ void test(void) {
 	int count[2];
 	char choice;
 	floor = 0;
-	init();
+	init_player();
+	init_monster();
 	read_file("field.txt", count);
 	do {
 		system("cls");
@@ -73,7 +74,7 @@ char keyActions(int index, int count[]) {
 	printf("\nPress a button to move (A = left, D = right, W = up, S = down).\n");
 	printf("Press a SPACE to wait a turn.\n");
 	key = _getch();
-
+	//Need to add monster movement here
 	switch (key) {
 	case 'A':
 	case 'a':
@@ -100,6 +101,7 @@ char keyActions(int index, int count[]) {
 		checkforladder(row+1, col, count);
 		break;
 	}
+	//Need to add monster collision conditions here
 
 	return key;
 }
