@@ -42,6 +42,16 @@ void init_monster()
 
 }
 
+void copymonsterspawns(int i, int j)
+{
+	g_spawns[i].posx = g_monsters[j].posx;
+	g_spawns[i].posy = g_monsters[j].posy;
+	g_spawns[i].attack = g_monsters[j].attack;
+	g_spawns[i].healthpoints = g_monsters[j].healthpoints;
+	g_spawns[i].frequency = g_monsters[j].frequency;
+	g_spawns[i].character = g_monsters[j].character;
+}
+
 /**
  * 
  */
