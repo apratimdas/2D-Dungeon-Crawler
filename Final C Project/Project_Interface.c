@@ -29,7 +29,7 @@ void test_queue(void) {
 	myq->first = myq->last = NULL;
 
 	for (int i = 0; i < 3; i++) {
-		qinsert(&myq, &m[i]);
+		q_insert(&myq, &m[i]);
 	}
 	tmp = myq->first;
 
@@ -38,7 +38,7 @@ void test_queue(void) {
 		tmp = tmp->next;
 	}
 
-	qdelete(&myq);
+	q_delete(&myq);
 
 	//free(myq);
 
