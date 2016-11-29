@@ -5,6 +5,7 @@
 #define _PROJECT_MONSTER_H_
 
 #define MAXMONSTERS 5
+#define MONSTERVARIETY 5
 
 typedef struct Monster {
     char name[25];
@@ -21,6 +22,7 @@ typedef struct Monster {
 	int frequency;
 } monster;
 
-monster g_monsters[MAXMONSTERS];
+monster g_monsters[MONSTERVARIETY];
+monster g_spawns[MAXMONSTERS];
 
 #endif // _PROJECT_MONSTER_H_
