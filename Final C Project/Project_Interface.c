@@ -70,6 +70,7 @@ void test(void) {
 //Need to add condition for blocked surrounding to prevent crash and collision detection with other monsters!!!
 void movemonsterdirection(int i, int dir)
 {
+	srand(time(0));
 	int x, y, flag = 0, ctr = 0;
 	x = g_spawns[i].posx;
 	y = g_spawns[i].posy;
@@ -78,20 +79,32 @@ void movemonsterdirection(int i, int dir)
 		switch (dir)
 		{
 		case 0:
-			g_spawns[i].posy = (g_field[x][y - 1] == FIELD_GROUND_CHAR) ? y - 1 : y;
-			flag = 1;
+			if (g_field[x][y - 1] == FIELD_GROUND_CHAR)
+			{
+				g_spawns[i].posy = y - 1;
+				flag = 1;
+			}
 			break;
 		case 1:
-			g_spawns[i].posy = (g_field[x][y + 1] == FIELD_GROUND_CHAR) ? y + 1 : y;
-			flag = 1;
+			if (g_field[x][y + 1] == FIELD_GROUND_CHAR)
+			{
+				g_spawns[i].posy = y + 1;
+				flag = 1;
+			}
 			break;
 		case 2:
-			g_spawns[i].posx = (g_field[x - 1][y] == FIELD_GROUND_CHAR) ? x - 1 : x;
-			flag = 1;
+			if (g_field[x - 1][y] == FIELD_GROUND_CHAR)
+			{
+				g_spawns[i].posx = x - 1;
+				flag = 1;
+			}
 			break;
 		case 3:
-			g_spawns[i].posx = (g_field[x + 1][y] == FIELD_GROUND_CHAR) ? x + 1 : x;
-			flag = 1;
+			if (g_field[x + 1][y] == FIELD_GROUND_CHAR)
+			{
+				g_spawns[i].posx = x + 1;
+				flag = 1;
+			}
 			break;
 		}
 		dir = rand() % 4;
