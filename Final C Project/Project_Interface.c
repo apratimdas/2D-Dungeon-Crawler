@@ -261,12 +261,12 @@ int interfaceCombat(void) {
 
 				if (g_turn_order->first->data->healthpoints <= 0) {
 					printf("%s is dead!\n", g_turn_order->first->data->name);
-					// monster killed
-					monsterKill();
 
 					if (tmp == g_turn_order->first) {
-						break;
+						tmp = g_turn_order->first->next;
 					}
+					// monster killed
+					monsterKill();
 				}
 			}
 		}
