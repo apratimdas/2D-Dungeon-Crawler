@@ -1,4 +1,5 @@
 
+#include "Project_Util.h"
 #include "Project_Field.h"
 #include "Project_Player.h" // for starting position
 #include "Project_Monster.h" // for initial monster spawns
@@ -224,9 +225,10 @@ void print_viewport(void) {
 		}
 		for (int j = col - size; j < col + size; j++) {
 
-			if (j == col-size) printf(" | ");
+			if (j == col - size) printf(" | ");
 
-			if (i < 0 || j < 0 || i >= g_rows || j >= g_cols) {
+			if (i < 0 || j < 0 || i >= g_rows || j >= g_cols
+				|| util_distance(i, j, g_players[0].posx, g_players[0].posy) > VIEWPORT_SIZE) {
 				printf("   ");
 			}
 			else if (g_field[i][j] == 'H')
@@ -274,7 +276,7 @@ void delete_field(void) {
     g_field = NULL;
 }
 
-void checkforladder(int row, int col, int count[])
+bool checkforladder(int row, int col, int count[])
 {
 	if (g_field[row][col] == 'H')
 	{
@@ -287,7 +289,11 @@ void checkforladder(int row, int col, int count[])
 		printf("%s", temp);
 		delete_field();
 		read_file(temp, count);
+
+		return true;
 	}
+
+	return false;
 }
 
 

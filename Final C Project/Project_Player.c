@@ -14,8 +14,8 @@ void init_player()
 		//scanf("%s", g_players[i].name, 25);
 		strcpy_s(g_players[i].name, 25, "Bob");
 		g_players[i].attack = 10;
+		g_players[i].defence = 5;
 		g_players[i].healthpoints = 100;
-
 	}
 }
 

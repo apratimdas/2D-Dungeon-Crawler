@@ -69,7 +69,7 @@ void test(void) {
 		printf("Name:\t%s\nHP:\t%d\nAttack:\t%d\n\n", g_players[0].name, g_players[0].healthpoints, g_players[0].attack);
 		//print_field();
 		print_viewport();
-		printf("\nPress X to exit.\n");
+		interfaceCombat();
 		choice = keyActions(0, count);
 		printf("%c\n", choice);
 	} while (choice != 'X' && choice != 'x');
@@ -84,7 +84,7 @@ void movemonsterdirection(int i, int dir)
 	x = g_spawns[i].posx;
 	y = g_spawns[i].posy;
 	
-	field_set_cell(x, y, FIELD_GROUND_CHAR);
+	field_set_cell(x, y, FIELD_GROUND_CHAR); // prevents collision
 	//testmdg
 	//printf("M (%c) x = %d, y = %d, dist = %lf, %lf\n", g_spawns[i].character, x, y,
 	//util_distance(x, y, g_players[0].posx, g_players[0].posy), util_distance(x+1, y, g_players[0].posx, g_players[0].posy));
@@ -134,48 +134,116 @@ void movemonsterdirection(int i, int dir)
 void movemonsters()
 {
 	srand(time(0));
-	for (int i = 0; i < MAXMONSTERS; i++) movemonsterdirection(i, rand() % 4);
+
+	for (int i = 0; i < MAXMONSTERS; i++) {
+		movemonsterdirection(i, rand() % 4);
+	}
+}
+
+void monsterKill(int i) {
+	
+}
+
+void interfaceCombat(void) {
+	int damage = 0;
+
+	for (int i = 0; i < MAXMONSTERS; i++) {
+		// if player is within range of the monster
+		if (util_distance(g_spawns[i].posx, g_spawns[i].posy, g_players[0].posx, g_players[0].posy) < 2) {
+			damage = g_spawns[i].attack - g_players[0].defence;
+			damage = damage < 0 ? 0 : damage;
+
+			printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_spawns[i].name, g_players[0].name, damage, g_spawns[i].defence);
+			g_players[0].healthpoints -= damage;
+			printf("%s has %d healthpoints left.\n", g_players[0].name, g_players[0].healthpoints);
+
+			if (g_players[0].healthpoints <= 0) {
+				printf("%s is dead!\n", g_players[0].name);
+				// game over
+			}
+
+			damage = g_players[0].attack - g_spawns[i].defence;
+			damage = damage < 0 ? 0 : damage;
+
+			printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_players[0].name, g_spawns[i].name, damage, g_players[0].defence);
+			g_spawns[i].healthpoints -= damage;
+			printf("%s has %d healthpoints left.\n", g_spawns[i].name, g_spawns[i].healthpoints);
+
+			if (g_spawns[i].healthpoints <= 0) {
+				printf("%s is dead!\n", g_spawns[i].name);
+				// monster killed
+
+
+			}
+		}
+	}
 }
 
 char keyActions(int index, int count[]) {
 	char key;
 	int row = g_players[index].posx,
-		col = g_players[index].posy;
+		col = g_players[index].posy,
+		isValidKey = 0;
 	printf("\nPress a button to move (A = left, D = right, W = up, S = down).\n");
 	printf("Press a SPACE to wait a turn.\n");
-	key = _getch();
-	//Need to add monster movement here
-	movemonsters();
-	switch (key) {
-	case 'A':
-	case 'a':
-	case 75:
-		g_players[index].posy = (g_field[row][col - 1] == FIELD_GROUND_CHAR) ? col - 1 : col;
-		checkforladder(row, col - 1, count);
-		break;
-	case 'D':
-	case 'd':
-	case 77:
-		g_players[index].posy = (g_field[row][col + 1] == FIELD_GROUND_CHAR) ? col + 1 : col;
-		checkforladder(row, col + 1, count);
-		break;
-	case 'W':
-	case 'w':
-	case 72:
-		g_players[index].posx = (g_field[row - 1][col] == FIELD_GROUND_CHAR) ? row - 1 : row;
-		checkforladder(row-1, col, count);
-		break;
-	case 'S':
-	case 's':
-	case 80:
-		g_players[index].posx = (g_field[row + 1][col] == FIELD_GROUND_CHAR) ? row + 1 : row;
-		checkforladder(row+1, col, count);
-		break;
-	}
-	//Need to add monster collision conditions here
-	
+	printf("\nPress X to exit.\n");
+
+	do {
+		key = _getch();
+
+		switch (key) {
+		case 'A':
+		case 'a':
+		//case 75: // these numbers are for in case the key is int
+			// consider if the player should use a turn if walking into an enemy space
+			if (g_field[row][col - 1] == FIELD_GROUND_CHAR
+				|| checkforladder(row, col - 1, count)) {
+				g_players[index].posy = col - 1;
+				isValidKey = 1;
+			}
+			break;
+		case 'D':
+		case 'd':
+		//case 77:
+			if (g_field[row][col + 1] == FIELD_GROUND_CHAR
+				|| checkforladder(row, col + 1, count)) {
+				g_players[index].posy = col + 1;
+				isValidKey = 1;
+			}
+			checkforladder(row, col + 1, count);
+			break;
+		case 'W':
+		case 'w':
+		//case 72:
+			if (g_field[row - 1][col] == FIELD_GROUND_CHAR
+				|| checkforladder(row - 1, col, count)) {
+				g_players[index].posx = row - 1;
+				isValidKey = 1;
+			}
+			break;
+		case 'S':
+		case 's':
+		//case 80:
+			if (g_field[row + 1][col] == FIELD_GROUND_CHAR
+				|| checkforladder(row + 1, col, count)) {
+				g_players[index].posx = row + 1;
+				isValidKey = 1;
+			}
+			break;
+		case ' ': // wait turn
+		case 'X': // exit
+		case 'x':
+			isValidKey = 1;
+			break;
+		}
+	} while(!isValidKey);
+
+	//Locks player cell
 	field_set_cell(row, col, FIELD_GROUND_CHAR);
 	field_set_cell(g_players[index].posx, g_players[index].posy, FIELD_BLOCK_CHAR);
-
+	//Need to add monster movement here
+	movemonsters();
+	//Need to add monster collision conditions here
+	
 	return key;
 }
