@@ -279,9 +279,9 @@ void checkforladder(int row, int col, int count[])
 	if (g_field[row][col] == 'H')
 	{
 		char temp[20] = "field";
-		floor++;
+		g_floor++;
 		char level[2] = "0";
-		level[0] += floor;
+		level[0] += g_floor;
 		strcat(temp, level);
 		strcat(temp,".txt");
 		printf("%s", temp);

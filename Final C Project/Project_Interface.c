@@ -60,7 +60,7 @@ void test_queue(void) {
 void test(void) {
 	int count[2];
 	char choice;
-	floor = 0;
+	g_floor = 0;
 	init_player();
 	init_monster();
 	read_file("field.txt", count);
@@ -80,7 +80,7 @@ void test(void) {
 void movemonsterdirection(int i, int dir)
 {
 	srand(time(0));
-	int x, y, flag = 0, ctr = 0;
+	int x, y, flag = 0, ctr = 0, a, b;
 	x = g_spawns[i].posx;
 	y = g_spawns[i].posy;
 	
@@ -88,45 +88,48 @@ void movemonsterdirection(int i, int dir)
 	//testmdg
 	//printf("M (%c) x = %d, y = %d, dist = %lf, %lf\n", g_spawns[i].character, x, y,
 	//util_distance(x, y, g_players[0].posx, g_players[0].posy), util_distance(x+1, y, g_players[0].posx, g_players[0].posy));
-	do
-	{
-		switch (dir)
-		{
-		case 0:
-			if (g_field[x][y - 1] == FIELD_GROUND_CHAR)
-			{
-				g_spawns[i].posy = y = y - 1;
-				flag = 1;
-			}
-			break;
-		case 1:
-			if (g_field[x][y + 1] == FIELD_GROUND_CHAR)
-			{
-				g_spawns[i].posy = y = y + 1;
-				flag = 1;
-			}
-			break;
-		case 2:
-			if (g_field[x - 1][y] == FIELD_GROUND_CHAR)
-			{
-				g_spawns[i].posx = x = x - 1;
-				flag = 1;
-			}
-			break;
-		case 3:
-			if (g_field[x + 1][y] == FIELD_GROUND_CHAR)
-			{
-				g_spawns[i].posx = x = x + 1;
-				flag = 1;
-			}
-			break;
-		case 4: // in case the monster choose to or cannot move
-			flag = 1;
-			break;
-		}
+	//do
+	//{
+	//	switch (dir)
+	//	{
+	//	case 0:
+	//		if (g_field[x][y - 1] == FIELD_GROUND_CHAR)
+	//		{
+	//			g_spawns[i].posy = y = y - 1;
+	//			flag = 1;
+	//		}
+	//		break;
+	//	case 1:
+	//		if (g_field[x][y + 1] == FIELD_GROUND_CHAR)
+	//		{
+	//			g_spawns[i].posy = y = y + 1;
+	//			flag = 1;
+	//		}
+	//		break;
+	//	case 2:
+	//		if (g_field[x - 1][y] == FIELD_GROUND_CHAR)
+	//		{
+	//			g_spawns[i].posx = x = x - 1;
+	//			flag = 1;
+	//		}
+	//		break;
+	//	case 3:
+	//		if (g_field[x + 1][y] == FIELD_GROUND_CHAR)
+	//		{
+	//			g_spawns[i].posx = x = x + 1;
+	//			flag = 1;
+	//		}
+	//		break;
+	//	case 4: // in case the monster choose to or cannot move
+	//		flag = 1;
+	//		break;
+	//	}
 
-		dir = rand() % 5;
-	} while (flag == 0);
+	//	dir = rand() % 5;
+	//} while (flag == 0);
+	set_closest_distance(x, y, g_players[0].posx, g_players[0].posy, &a, &b);
+	g_spawns[i].posx = x = a;
+	g_spawns[i].posy = y = b;
 	
 	field_set_cell(x, y, FIELD_BLOCK_CHAR);
 }
@@ -145,7 +148,6 @@ char keyActions(int index, int count[]) {
 	printf("Press a SPACE to wait a turn.\n");
 	key = _getch();
 	//Need to add monster movement here
-	movemonsters();
 	switch (key) {
 	case 'A':
 	case 'a':
@@ -173,9 +175,9 @@ char keyActions(int index, int count[]) {
 		break;
 	}
 	//Need to add monster collision conditions here
-	
 	field_set_cell(row, col, FIELD_GROUND_CHAR);
 	field_set_cell(g_players[index].posx, g_players[index].posy, FIELD_BLOCK_CHAR);
+	movemonsters();
 
 	return key;
 }
