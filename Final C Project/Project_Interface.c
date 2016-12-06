@@ -21,9 +21,9 @@ void test_queue(void) {
 	monster *m[3] = { NULL };
 	monster *tmpmonster = NULL;
 
-	m[0] = create_imp();
-	m[1] = create_daemon();
-	m[2] = create_rat();
+	m[0] = create_imp(1.0);
+	m[1] = create_daemon(1.0);
+	m[2] = create_rat(1.0);
 
 	myq = q_new();
 

@@ -116,6 +116,7 @@ void monsterspawner()
 {
 	monster *mon;
 	int i, j, r, ctr = 0;
+	double level_multiplier = 1.0;
 
 	srand(time(0));
 
@@ -136,7 +137,7 @@ void monsterspawner()
 				//copymonsterspawns(ctr, 3);
 				//printf("Monster 1\n");
 
-				mon = create_rat();
+				mon = create_rat(level_multiplier);
 				mon->posx = i;
 				mon->posy = j;
 			}
@@ -149,7 +150,7 @@ void monsterspawner()
 				//copymonsterspawns(ctr, 0);
 				//printf("Monster 2\n");
 
-				mon = create_imp();
+				mon = create_imp(level_multiplier);
 				mon->posx = i;
 				mon->posy = j;
 			}
@@ -161,7 +162,7 @@ void monsterspawner()
 				//copymonsterspawns(ctr, 4);
 				//printf("Monster 3\n");
 
-				mon = create_thief();
+				mon = create_thief(level_multiplier);
 				mon->posx = i;
 				mon->posy = j;
 			}
@@ -173,7 +174,7 @@ void monsterspawner()
 				//copymonsterspawns(ctr, 2);
 				//printf("Monster 4\n");
 
-				mon = create_ogre();
+				mon = create_ogre(level_multiplier);
 				mon->posx = i;
 				mon->posy = j;
 			}
@@ -185,7 +186,7 @@ void monsterspawner()
 				//copymonsterspawns(ctr, 1);
 				//printf("Monster 5\n");
 
-				mon = create_daemon();
+				mon = create_daemon(level_multiplier);
 				mon->posx = i;
 				mon->posy = j;
 			}

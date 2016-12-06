@@ -68,72 +68,82 @@ void monster_copy_data(monster **dest, monster *orig) {
 	(*dest)->frequency = orig->frequency;
 }
 
-monster* create_imp(void) {
+monster* create_imp(double level) {
 	monster *mon = (monster*)malloc(sizeof(monster));
 	
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Imp");
 	mon->character = 'I';
-	mon->healthpoints = 15;
-	mon->attack = 10;
-	mon->defence = 2;
-	mon->speed = 5;
-	mon->frequency = 4;
+	mon->level =			(int)level;
+	mon->experience =		(int)level;
+	mon->healthpoints =		(int)(15 * level);
+	mon->attack =			(int)(10 * level);
+	mon->defence =			(int)(2 * level);
+	mon->speed =			5;
+	mon->frequency =		4;
 
 	return mon;
 }
 
-monster* create_daemon(void) {
+monster* create_daemon(double level) {
 	monster *mon = (monster*)malloc(sizeof(monster));
 
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Demon");
 	mon->character = 'D';
-	mon->healthpoints = 50;
-	mon->attack = 25;
-	mon->defence = 5;
-	mon->speed = 4;
-	mon->frequency = 1;
+	mon->level =			(int)level;
+	mon->experience =		(int)level;
+	mon->healthpoints =		(int)(50 * level);
+	mon->attack =			(int)(25 * level);
+	mon->defence =			(int)(5 * level);
+	mon->speed =			4;
+	mon->frequency =		1;
 
 	return mon;
 }
 
-monster* create_ogre(void) {
+monster* create_ogre(double level) {
 	monster *mon = (monster*)malloc(sizeof(monster));
 
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Ogre");
 	mon->character = 'O';
-	mon->healthpoints = 40;
-	mon->attack = 20;
-	mon->defence = 8;
-	mon->speed = 1;
-	mon->frequency = 2;
+	mon->level =			(int)level;
+	mon->experience =		(int)level;
+	mon->healthpoints =		(int)(40 * level);
+	mon->attack =			(int)(20 * level);
+	mon->defence =			(int)(8 * level);
+	mon->speed =			1;
+	mon->frequency =		2;
 
 	return mon;
 }
 
-monster* create_rat(void) {
+monster* create_rat(double level) {
 	monster *mon = (monster*)malloc(sizeof(monster));
 	
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Rat");
 	mon->character = 'R';
-	mon->healthpoints = 10;
-	mon->attack = 5;
-	mon->defence = 0;
-	mon->speed = 3;
-	mon->frequency = 5;
+	mon->level =			(int)level;
+	mon->experience =		(int)level;
+	mon->healthpoints =		(int)(10 * level);
+	mon->attack =			(int)(5 * level);
+	mon->defence =			(int)(0 * level);
+	mon->speed =			3;
+	mon->frequency =		5;
 
 	return mon;
 }
 
-monster* create_thief(void) {
+monster* create_thief(double level) {
 	monster *mon = (monster*)malloc(sizeof(monster));
 	
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Thief");
 	mon->character = 'T';
-	mon->healthpoints = 30;
-	mon->attack = 15;
-	mon->defence = 3;
-	mon->speed = 5;
-	mon->frequency = 3;
+	mon->level =			(int)level;
+	mon->experience =		(int)level;
+	mon->healthpoints =		(int)(30 * level);
+	mon->attack =			(int)(15 * level);
+	mon->defence =			(int)(3 * level);
+	mon->speed =			5;
+	mon->frequency =		3;
 
 	return mon;
 }

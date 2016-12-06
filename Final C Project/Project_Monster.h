@@ -11,9 +11,9 @@
 typedef struct Monster {
     char name[MONSTER_NAME_SIZE];
 	char character;
+	double level;
+	int experience;
     int healthpoints;
-    int level;
-    int experience;
     int attack;
     int defence;
     int speed;
@@ -30,10 +30,10 @@ void init_monster();
 
 void monster_copy_data(monster **dest, monster *orig);
 
-monster* create_imp(void);
-monster* create_daemon(void);
-monster* create_ogre(void);
-monster* create_rat(void);
-monster* create_thief(void);
+monster* create_imp(double level);
+monster* create_daemon(double level);
+monster* create_ogre(double level);
+monster* create_rat(double level);
+monster* create_thief(double level);
 
 #endif // _PROJECT_MONSTER_H_
