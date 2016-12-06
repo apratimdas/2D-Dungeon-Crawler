@@ -283,7 +283,7 @@ int interfaceCombat(void) {
 			);
 	if (g_floor == 2 && q_isEmpty(g_turn_order))
 	{
-		printf("YOU WIN!!!!\n");
+		printf("YOU WIN!!!!\nThanks for playing!\n");
 		return 0;
 	}
 	return 0;

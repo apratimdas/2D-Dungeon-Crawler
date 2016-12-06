@@ -109,7 +109,7 @@ monster* create_ogre(double level) {
 	mon->experience =		(int)level;
 	mon->healthpoints =		(int)(40 * level);
 	mon->attack =			(int)(20 * level);
-	mon->defence =			(int)(8 * level);
+	mon->defence =			(int)(5 * level);
 	mon->speed =			1;
 	mon->frequency =		2;
 
