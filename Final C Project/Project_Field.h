@@ -6,6 +6,8 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
+#include "Project_Queue.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,6 +18,8 @@ char ** g_field;
 int g_rows,
     g_cols;
 int g_floor;
+
+queue *g_turn_order;
 
 void read_file(const char *file_name, int count[]);
 

@@ -1,12 +1,14 @@
 
-#include "Project_Util.h"
 #include "Project_Field.h"
+
+#include "Project_Util.h"
 #include "Project_Player.h" // for starting position
-#include "Project_Monster.h" // for initial monster spawns
-#include <stdbool.h>
+//#include "Project_Monster.h" // for initial monster spawns
+
 #include <time.h>
 #include <string.h>
-#include<Windows.h>
+#include <stdbool.h>
+#include <Windows.h>
 
 
 #define VIEWPORT_SIZE 5
@@ -83,16 +85,27 @@ void read_file(const char *file_name, int count[]) {
             cols++;
         }
     }
+
 	resetmonsters();
 	monsterspawner();
 }
 
 void resetmonsters()
 {
-	for (int i = 0; i < MAXMONSTERS; i++)
+	/*for (int i = 0; i < MAXMONSTERS; i++)
 	{
 		g_monsters[i].posx = -1;
 		g_monsters[i].posy = -1;
+	}*/
+
+	qnode *tmp = g_turn_order->first;
+
+	while (tmp != NULL) {
+		if (tmp->data) {
+			tmp->data->posx = -1;
+			tmp->data->posy = -1;
+		}
+		tmp = tmp->next;
 	}
 }
 
@@ -114,46 +127,68 @@ void monsterspawner()
 			r = rand();
 			if ((r % 15) >= 0 && (r % 15) <= 4)
 			{
-				//set monster with freq 5
-				g_monsters[3].posx = i;
-				g_monsters[3].posy = j;
-				//g_field[i][j] = g_monsters[3].character;
-				copymonsterspawns(ctr, 3);
-				printf("Monster 1\n");
+				////set monster with freq 5
+				//g_monsters[3].posx = i;
+				//g_monsters[3].posy = j;
+				////g_field[i][j] = g_monsters[3].character;
+				//copymonsterspawns(ctr, 3);
+				//printf("Monster 1\n");
+
+				mon = create_rat();
+				mon->posx = i;
+				mon->posy = j;
 			}
 			else if ((r % 15) >= 5 && (r % 15) <= 8)
 			{
-				//freq 4
-				g_monsters[0].posx = i;
-				g_monsters[0].posy = j;
-				//g_field[i][j] = g_monsters[0].character;
-				copymonsterspawns(ctr, 0);
-				printf("Monster 2\n");
+				////freq 4
+				//g_monsters[0].posx = i;
+				//g_monsters[0].posy = j;
+				////g_field[i][j] = g_monsters[0].character;
+				//copymonsterspawns(ctr, 0);
+				//printf("Monster 2\n");
+
+				mon = create_imp();
+				mon->posx = i;
+				mon->posy = j;
 			}
 			else if ((r % 15) >= 9 && (r % 15) <= 11)
 			{
-				g_monsters[4].posx = i;
-				g_monsters[4].posy = j;
-				//g_field[i][j] = g_monsters[4].character;
-				copymonsterspawns(ctr, 4);
-				printf("Monster 3\n");
+				//g_monsters[4].posx = i;
+				//g_monsters[4].posy = j;
+				////g_field[i][j] = g_monsters[4].character;
+				//copymonsterspawns(ctr, 4);
+				//printf("Monster 3\n");
+
+				mon = create_thief();
+				mon->posx = i;
+				mon->posy = j;
 			}
 			else if ((r % 15) >= 12 && (r % 15) <= 13)
 			{
-				g_monsters[2].posx = i;
-				g_monsters[2].posy = j;
-				//g_field[i][j] = g_monsters[2].character;
-				copymonsterspawns(ctr, 2);
-				printf("Monster 4\n");
+				//g_monsters[2].posx = i;
+				//g_monsters[2].posy = j;
+				////g_field[i][j] = g_monsters[2].character;
+				//copymonsterspawns(ctr, 2);
+				//printf("Monster 4\n");
+
+				mon = create_ogre();
+				mon->posx = i;
+				mon->posy = j;
 			}
 			else
 			{
-				g_monsters[1].posx = i;
-				g_monsters[1].posy = j;
-				//g_field[i][j] = g_monsters[1].character;
-				copymonsterspawns(ctr, 1);
-				printf("Monster 5\n");
+				//g_monsters[1].posx = i;
+				//g_monsters[1].posy = j;
+				////g_field[i][j] = g_monsters[1].character;
+				//copymonsterspawns(ctr, 1);
+				//printf("Monster 5\n");
+
+				mon = create_daemon();
+				mon->posx = i;
+				mon->posy = j;
 			}
+
+			q_insert(&g_turn_order, mon);
 			ctr++;
 		}
 
@@ -162,14 +197,58 @@ void monsterspawner()
 
 bool checkformonster(int x, int y)
 {
-	for (int i = 0; i < MAXMONSTERS; i++) if (x == g_spawns[i].posx && y == g_spawns[i].posy) return true;
+	/*for (int i = 0; i < MAXMONSTERS; i++) {
+		if (x == g_spawns[i].posx && y == g_spawns[i].posy) {
+			return true;
+		}
+	}*/
+	qnode *tmp = g_turn_order->first;
+
+	while (tmp != NULL) {
+		if (tmp->data) {
+			if (x == tmp->data->posx && y == tmp->data->posy) {
+				return true;
+			}
+		}
+		tmp = tmp->next;
+	}
+
 	return false;
 }
 
-int getmonsterindex(int x, int y)
+//int getmonsterindex(int x, int y)
+//{
+//	qnode *tmp = g_turn_order->first;
+//
+//	while (tmp != NULL) {
+//		if (tmp->data) {
+//			if (x == tmp->data->posx && y == tmp->data->posy) {
+//				return i;
+//			}
+//		}
+//	}
+//
+//	return -1;
+//
+//	//for (int i = 0; i < MAXMONSTERS; i++) if (x == g_spawns[i].posx && y == g_spawns[i].posy) return i;
+//}
+
+monster* getmonster(int x, int y)
 {
-	for (int i = 0; i < MAXMONSTERS; i++) if (x == g_spawns[i].posx && y == g_spawns[i].posy) return i;
-	return -1;
+	qnode *tmp = g_turn_order->first;
+
+	while (tmp != NULL) {
+		if (tmp->data) {
+			if (x == tmp->data->posx && y == tmp->data->posy) {
+				return tmp->data;
+			}
+		}
+		tmp = tmp->next;
+	}
+
+	return NULL;
+
+	//for (int i = 0; i < MAXMONSTERS; i++) if (x == g_spawns[i].posx && y == g_spawns[i].posy) return i;
 }
 
 bool field_is_valid_pos(int x, int y) {
@@ -243,7 +322,7 @@ void print_viewport(void) {
 			else if (checkformonster(i, j))					//Fix color bug (Sometimes doesnt appear for some of the monsters)
 			{
 				SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_RED);
-				printf(" %c ", g_spawns[getmonsterindex(i, j)].character);
+				printf(" %c ", getmonster(i, j)->character);
 				SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 			}
 			else if (i == g_players[0].posx && j == g_players[0].posy) {

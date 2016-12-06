@@ -6,6 +6,7 @@
 
 void test_queue(void);
 void test(void);
+void start_game(void);
 void interfaceCombat(void);
 char keyActions(int index, int count[]);
 

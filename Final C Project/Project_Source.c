@@ -3,11 +3,12 @@
 
 #include "Project_Interface.h"
 
+// checking for memory leaks
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 #include <stdio.h>
 
-#define _CRTDBG_MAP_ALLOC  
-#include <stdlib.h>  
-#include <crtdbg.h> 
 
 /**
  *
@@ -35,13 +36,9 @@
 //5 - new thing that you learn not covered in the class
 
 int main (void) {
-	test_queue();
+	start_game();
+	//test_queue();
 	//test();
-	//printf("test");
-	//test
-	//test2
-	//test3
-	//test45
 
 	printf("Thank you for playing our game!\n");
 	printf("We hope to see again soon.\n");

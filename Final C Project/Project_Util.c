@@ -1,17 +1,14 @@
 
 #include "Project_Util.h"
-#include "Project_Interface.h"
-#include "Project_Monster.h"
-#include "Project_Player.h"
+
 #include "Project_Field.h"
-#include "Project_Queue.h"
-#include "Project_Util.h"
+
 //#include <time.h>
+//#include <string.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-//#include <string.h>
-#include <math.h>
 
 
 //Define other attributes like speed when needed
