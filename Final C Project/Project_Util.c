@@ -23,7 +23,6 @@ bool check_valid_move(int x, int y)
 	return false;
 }
 
-
 void set_closest_distance(int posx1, int posy1, int posx2, int posy2, int *x, int *y)
 {
 	double min=INT_MAX;
