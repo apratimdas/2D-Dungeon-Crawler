@@ -68,6 +68,76 @@ void monster_copy_data(monster **dest, monster *orig) {
 	(*dest)->frequency = orig->frequency;
 }
 
+monster* create_imp(void) {
+	monster *mon = (monster*)malloc(sizeof(monster));
+	
+	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Imp");
+	mon->character = 'I';
+	mon->healthpoints = 100;
+	mon->attack = 10;
+	mon->defence = 2;
+	mon->speed = 5;
+	mon->frequency = 4;
+
+	return mon;
+}
+
+monster* create_daemon(void) {
+	monster *mon = (monster*)malloc(sizeof(monster));
+
+	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Demon");
+	mon->character = 'D';
+	mon->healthpoints = 100;
+	mon->attack = 10;
+	mon->defence = 5;
+	mon->speed = 4;
+	mon->frequency = 1;
+
+	return mon;
+}
+
+monster* create_ogre(void) {
+	monster *mon = (monster*)malloc(sizeof(monster));
+
+	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Ogre");
+	mon->character = 'O';
+	mon->healthpoints = 100;
+	mon->attack = 10;
+	mon->defence = 8;
+	mon->speed = 1;
+	mon->frequency = 2;
+
+	return mon;
+}
+
+monster* create_rat(void) {
+	monster *mon = (monster*)malloc(sizeof(monster));
+	
+	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Rat");
+	mon->character = 'R';
+	mon->healthpoints = 100;
+	mon->attack = 10;
+	mon->defence = 0;
+	mon->speed = 3;
+	mon->frequency = 5;
+
+	return mon;
+}
+
+monster* create_thief(void) {
+	monster *mon = (monster*)malloc(sizeof(monster));
+	
+	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Thief");
+	mon->character = 'T';
+	mon->healthpoints = 100;
+	mon->attack = 10;
+	mon->defence = 3;
+	mon->speed = 5;
+	mon->frequency = 3;
+
+	return mon;
+}
+
 /**
  * 
  */

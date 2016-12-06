@@ -19,17 +19,17 @@
 void test_queue(void) {
 	queue *myq = NULL;
 	qnode *tmp = NULL;
-	monster m[3];
+	monster *m[3] = { NULL };
 	monster *tmpmonster = NULL;
 
-	m[0].speed = 10;
-	m[1].speed = 12;
-	m[2].speed = 11;
+	m[0] = create_imp();
+	m[1] = create_daemon();
+	m[2] = create_rat();
 
 	myq = q_new();
 
 	for (int i = 0; i < 3; i++) {
-		q_insert(&myq, &m[i]);
+		q_insert(&myq, m[i]);
 	}
 	tmp = myq->first;
 
@@ -46,6 +46,9 @@ void test_queue(void) {
 
 		if (tmp != NULL) {
 			printf("Test monster %d\n", tmp->data->speed);
+
+			free(tmp->data);
+			tmp->data = NULL;
 		}
 
 		free(tmp);
@@ -54,7 +57,8 @@ void test_queue(void) {
 
 	q_delete(&myq);
 
-	//free(myq);
+	free(myq);
+	myq = NULL;
 }
 
 void test(void) {

@@ -28,4 +28,10 @@ monster g_spawns[MAXMONSTERS];
 
 void monster_copy_data(monster **dest, monster *orig);
 
+monster* create_imp(void);
+monster* create_daemon(void);
+monster* create_ogre(void);
+monster* create_rat(void);
+monster* create_thief(void);
+
 #endif // _PROJECT_MONSTER_H_

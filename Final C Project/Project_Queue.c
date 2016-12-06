@@ -132,6 +132,8 @@ int q_delete(queue **myqueue) {
 	while ((*myqueue)->first != NULL) {
 		tmp = (*myqueue)->first;
 		(*myqueue)->first = (*myqueue)->first->next;
+		free(tmp->data);
+		tmp->data = NULL;
 		free(tmp);
 		tmp = NULL;
 	}

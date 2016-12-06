@@ -99,8 +99,11 @@ void resetmonsters()
 //Need to modify spawn location here
 void monsterspawner()
 {
+	monster *mon;
 	int i, j, r, ctr = 0;
+
 	srand(time(0));
+
 	do
 	{
 		i = rand() % g_rows;

@@ -5,6 +5,10 @@
 
 #include <stdio.h>
 
+#define _CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
+#include <crtdbg.h> 
+
 /**
  *
  * @author Apratim, Matheus Depra Gudergues
@@ -32,7 +36,7 @@
 
 int main (void) {
 	test_queue();
-	test();
+	//test();
 	//printf("test");
 	//test
 	//test2
@@ -42,6 +46,8 @@ int main (void) {
 	printf("Thank you for playing our game!\n");
 	printf("We hope to see again soon.\n");
 	printf("Best regards.\n");
+
+	_CrtDumpMemoryLeaks();
 
     //getchar();
     getchar();
