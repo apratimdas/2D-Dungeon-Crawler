@@ -44,6 +44,7 @@ void init_monster()
 
 void copymonsterspawns(int i, int j)
 {
+	strcpy_s(g_spawns[i].name, MONSTER_NAME_SIZE, g_monsters[j].name);
 	g_spawns[i].posx = g_monsters[j].posx;
 	g_spawns[i].posy = g_monsters[j].posy;
 	g_spawns[i].attack = g_monsters[j].attack;

@@ -63,6 +63,7 @@ void q_insert(queue **myqueue, monster *data) {
 	}
 }
 
+// cicles the queue without dequeuing and enqueuing for turn manipulation
 monster* q_cicle_queue(queue **myqueue) {
 	if (!q_isEmpty(**myqueue)) { // if not empty queue
 		if (!((*myqueue)->first == (*myqueue)->last)) {
