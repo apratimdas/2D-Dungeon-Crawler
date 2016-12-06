@@ -73,7 +73,7 @@ monster* create_imp(void) {
 	
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Imp");
 	mon->character = 'I';
-	mon->healthpoints = 100;
+	mon->healthpoints = 15;
 	mon->attack = 10;
 	mon->defence = 2;
 	mon->speed = 5;
@@ -87,8 +87,8 @@ monster* create_daemon(void) {
 
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Demon");
 	mon->character = 'D';
-	mon->healthpoints = 100;
-	mon->attack = 10;
+	mon->healthpoints = 50;
+	mon->attack = 25;
 	mon->defence = 5;
 	mon->speed = 4;
 	mon->frequency = 1;
@@ -101,8 +101,8 @@ monster* create_ogre(void) {
 
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Ogre");
 	mon->character = 'O';
-	mon->healthpoints = 100;
-	mon->attack = 10;
+	mon->healthpoints = 40;
+	mon->attack = 20;
 	mon->defence = 8;
 	mon->speed = 1;
 	mon->frequency = 2;
@@ -115,8 +115,8 @@ monster* create_rat(void) {
 	
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Rat");
 	mon->character = 'R';
-	mon->healthpoints = 100;
-	mon->attack = 10;
+	mon->healthpoints = 10;
+	mon->attack = 5;
 	mon->defence = 0;
 	mon->speed = 3;
 	mon->frequency = 5;
@@ -129,8 +129,8 @@ monster* create_thief(void) {
 	
 	strcpy_s(mon->name, MONSTER_NAME_SIZE, "Thief");
 	mon->character = 'T';
-	mon->healthpoints = 100;
-	mon->attack = 10;
+	mon->healthpoints = 30;
+	mon->attack = 15;
 	mon->defence = 3;
 	mon->speed = 5;
 	mon->frequency = 3;
