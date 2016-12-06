@@ -116,7 +116,6 @@ void monsterspawner()
 {
 	monster *mon;
 	int i, j, r, ctr = 0;
-	double level_multiplier = 1.0;
 
 	srand((unsigned)time(0));
 
