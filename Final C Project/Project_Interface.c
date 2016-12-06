@@ -271,7 +271,7 @@ int interfaceCombat(void) {
 		kill_flag = 0;
 		printf("\n");
 	} while (tmp != g_turn_order->first && g_turn_order->first != NULL);
-
+	if (q_isEmpty(g_turn_order) && g_floor == 2) return 1;
 	return 0;
 }
 

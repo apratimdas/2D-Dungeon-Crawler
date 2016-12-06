@@ -17,7 +17,7 @@ void init_player()
 		g_players[i].level = 1;
 		g_players[i].experience = 0;
 		g_players[i].healthpoints = 500;
-		g_players[i].attack = 10;
+		g_players[i].attack = 100;
 		g_players[i].defence = 5;
 		g_players[i].speed = 3;
 	}
