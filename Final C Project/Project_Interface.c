@@ -84,8 +84,11 @@ void test(void) {
 }
 
 void start_game(void) {
-	int count[2];
+	int count[2],
+		game_over_flag = 0;
 	char choice;
+
+	g_turn_order = NULL;
 
 	init_player();
 	init_monster();
@@ -99,17 +102,24 @@ void start_game(void) {
 		printf("Name:\t%s\nHP:\t%d\nAttack:\t%d\n\n", g_players[0].name, g_players[0].healthpoints, g_players[0].attack);
 		
 		print_viewport();
-		interfaceCombat();
+		game_over_flag = interfaceCombat();
 
-		choice = keyActions(0, count);
-	} while (choice != 'X' && choice != 'x');
+		if (!game_over_flag) {
+			choice = keyActions(0, count);
+		}
+	} while (choice != 'X' && choice != 'x' && !game_over_flag);
+
+	q_delete(&g_turn_order);
+
+	free(g_turn_order);
+	g_turn_order = NULL;
 	delete_field();
 }
 
 //Need to add condition for blocked surroundings to prevent crash -> collision detection with other monsters!!!
 void movemonsterdirection(monster **mon, int dir)
 {
-	srand(time(0));
+	srand((unsigned)time(0));
 	int x, y, flag = 0, ctr = 0, a, b;
 	/*x = g_spawns[i].posx;
 	y = g_spawns[i].posy;*/
@@ -186,73 +196,73 @@ void movemonsters(void)
 	}
 }
 
-void monsterKill(int i) {
-	
+void gameOver(void) {
+	printf("\nYou have been killed by %s.\n", g_turn_order->first->data->name);
+	printf("GAME OVER!\n\n");
 }
 
-void interfaceCombat(void) {
-	//for (int i = 0; i < MAXMONSTERS; i++) {
-	//	// if player is within range of the monster
-	//	if (util_distance(g_spawns[i].posx, g_spawns[i].posy, g_players[0].posx, g_players[0].posy) < 2) {
-	//		damage = g_spawns[i].attack - g_players[0].defence;
-	//		damage = damage < 0 ? 0 : damage;
+void monsterKill(void) {
+	qnode *deq = q_dequeue(&g_turn_order);
 
-	//		printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_spawns[i].name, g_players[0].name, damage, g_spawns[i].defence);
-	//		g_players[0].healthpoints -= damage;
-	//		printf("%s has %d healthpoints left.\n", g_players[0].name, g_players[0].healthpoints);
+	g_players[0].experience += 1;
+	g_players[0].healthpoints += 10;
 
-	//		if (g_players[0].healthpoints <= 0) {
-	//			printf("%s is dead!\n", g_players[0].name);
-	//			// game over
-	//		}
+	field_set_cell(deq->data->posx, deq->data->posy, FIELD_GROUND_CHAR);
 
-	//		damage = g_players[0].attack - g_spawns[i].defence;
-	//		damage = damage < 0 ? 0 : damage;
+	printf("%s received %d experience and healed %d HP!\n", g_players[0].name, 1, 10);
+}
 
-	//		printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_players[0].name, g_spawns[i].name, damage, g_players[0].defence);
-	//		g_spawns[i].healthpoints -= damage;
-	//		printf("%s has %d healthpoints left.\n", g_spawns[i].name, g_spawns[i].healthpoints);
-
-	//		if (g_spawns[i].healthpoints <= 0) {
-	//			printf("%s is dead!\n", g_spawns[i].name);
-	//			// monster killed
-	//		}
-	//	}
-	//}
-	int damage = 0;
+int interfaceCombat(void) {
+	int damage = 0, kill_flag = 0;
 	qnode *tmp = g_turn_order->first;
 
-	while (tmp != NULL) {
-		if (tmp->data) {
+	do {
+		if (g_turn_order->first->data) {
 			// if player is within range of the monster
-			if (util_distance(tmp->data->posx, tmp->data->posy, g_players[0].posx, g_players[0].posy) < 2) {
-				damage = tmp->data->attack - g_players[0].defence;
+			if (util_distance(g_turn_order->first->data->posx, g_turn_order->first->data->posy, g_players[0].posx, g_players[0].posy) < 2) {
+				damage = g_turn_order->first->data->attack - g_players[0].defence;
 				damage = damage < 0 ? 0 : damage;
 
-				printf("%s attacks %s for %d points of damage (%d absorbed)!\n", tmp->data->name, g_players[0].name, damage, tmp->data->defence);
+				printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_turn_order->first->data->name,
+					g_players[0].name, damage, g_turn_order->first->data->defence);
 				g_players[0].healthpoints -= damage;
-				printf("%s has %d healthpoints left.\n", g_players[0].name, g_players[0].healthpoints);
+				printf("%s has %d HP.\n", g_players[0].name, g_players[0].healthpoints);
 
 				if (g_players[0].healthpoints <= 0) {
 					printf("%s is dead!\n", g_players[0].name);
 					// game over
+					gameOver();
+
+					return 1;
 				}
 
-				damage = g_players[0].attack - tmp->data->defence;
+				damage = g_players[0].attack - g_turn_order->first->data->defence;
 				damage = damage < 0 ? 0 : damage;
 
-				printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_players[0].name, tmp->data->name, damage, g_players[0].defence);
-				tmp->data->healthpoints -= damage;
-				printf("%s has %d healthpoints left.\n", tmp->data->name, tmp->data->healthpoints);
+				printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_players[0].name, g_turn_order->first->data->name, damage, g_players[0].defence);
+				g_turn_order->first->data->healthpoints -= damage;
+				printf("%s has %d HP.\n", g_turn_order->first->data->name, g_turn_order->first->data->healthpoints);
 
-				if (tmp->data->healthpoints <= 0) {
-					printf("%s is dead!\n", tmp->data->name);
+				if (g_turn_order->first->data->healthpoints <= 0) {
+					printf("%s is dead!\n", g_turn_order->first->data->name);
 					// monster killed
+					monsterKill();
+
+					if (tmp == g_turn_order->first) {
+						break;
+					}
 				}
 			}
 		}
-		tmp = tmp->next;
-	}
+		if (!kill_flag) {
+			q_cicle_queue(&g_turn_order);
+		}
+		
+		kill_flag = 0;
+		printf("\n");
+	} while (tmp != g_turn_order->first && g_turn_order->first != NULL);
+
+	return 0;
 }
 
 char keyActions(int index, int count[]) {

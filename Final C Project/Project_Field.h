@@ -8,8 +8,7 @@
 
 #include "Project_Queue.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 
 #define FIELD_BLOCK_CHAR '0' // cannot move to
 #define FIELD_GROUND_CHAR '1' // can move to
@@ -18,6 +17,7 @@ char ** g_field;
 int g_rows,
     g_cols;
 int g_floor;
+int g_viewport_size;
 
 queue *g_turn_order;
 
@@ -30,24 +30,6 @@ void print_viewport(void);
 
 void delete_field(void);
 
-// #define MAXPLAYERS 2
-
-// typedef struct BPlayers {
-//     char name[25];
-//     int homeruns;
-//     int hits;
-// } bplayers;
-
-// bplayers g_players[MAXPLAYERS];
-
-// void dataInput(void);
-// void dataOutput(void);
-// void printPlayer(int index);
-// int updateData(int index, int data[]);
-// int searchPlayerName(char name[]);
-// void saveToFile(void);
-// void menu(void);
-// int menuSelection(void);
-// void selectionAction(int choice);
+bool checkforladder(int row, int col, int count[]);
 
 #endif // _PROJECT_APRATIM_MATHEUS_386711_FIELD_H_

@@ -7,7 +7,7 @@
 void test_queue(void);
 void test(void);
 void start_game(void);
-void interfaceCombat(void);
+int interfaceCombat(void);
 char keyActions(int index, int count[]);
 
 #endif // _PROJECT_INTERFACE_H_

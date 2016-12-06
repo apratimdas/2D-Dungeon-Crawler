@@ -9,9 +9,9 @@
 
 typedef struct Player {
     char name[25];
+	int level;
+	int experience;
     int healthpoints;
-    int level;
-    int experience;
     int attack;
     int defence;
     int speed;
@@ -21,5 +21,7 @@ typedef struct Player {
 } player;
 
 player g_players[MAXPLAYERS];
+
+void init_player();
 
 #endif // _PROJECT_PLAYER_H_

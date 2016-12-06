@@ -26,6 +26,8 @@ typedef struct Monster {
 monster g_monsters[MONSTERVARIETY];
 monster g_spawns[MAXMONSTERS];
 
+void init_monster();
+
 void monster_copy_data(monster **dest, monster *orig);
 
 monster* create_imp(void);
