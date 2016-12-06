@@ -16,7 +16,7 @@ void init_player()
 		strcpy_s(g_players[i].name, 25, "Bob");
 		g_players[i].level = 1;
 		g_players[i].experience = 0;
-		g_players[i].healthpoints = 100;
+		g_players[i].healthpoints = 1000;
 		g_players[i].attack = 10;
 		g_players[i].defence = 5;
 		g_players[i].speed = 3;
