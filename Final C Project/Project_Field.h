@@ -28,6 +28,7 @@ void field_set_cell(int x, int y, char ch);
 void print_field(void);
 void print_viewport(void);
 
+double level_multiplier;
 void delete_field(void);
 
 bool checkforladder(int row, int col, int count[]);

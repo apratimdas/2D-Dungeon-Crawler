@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <Windows.h>
 #include <conio.h>
 
 /**
@@ -63,7 +64,6 @@ void test_queue(void) {
 void test(void) {
 	int count[2];
 	char choice;
-
 	g_floor = 0;
 	init_player();
 	init_monster();
@@ -88,6 +88,7 @@ void start_game(void) {
 		game_over_flag = 0;
 	char choice;
 
+	main_menu();
 	g_turn_order = NULL;
 
 	init_player();
@@ -215,6 +216,8 @@ void monsterKill(void) {
 int interfaceCombat(void) {
 	int damage = 0, kill_flag = 0;
 	qnode *tmp = g_turn_order->first;
+	HANDLE h;
+	h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	do {
 		if (g_turn_order->first->data) {
@@ -226,13 +229,17 @@ int interfaceCombat(void) {
 				printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_turn_order->first->data->name,
 					g_players[0].name, damage, g_turn_order->first->data->defence);
 				g_players[0].healthpoints -= damage;
-				printf("%s has %d HP.\n", g_players[0].name, g_players[0].healthpoints);
+				printf("%s has", g_players[0].name);
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_BLUE);
+				printf(" %d HP ", g_players[0].healthpoints);
+				SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
+				printf(".\n");
 
 				if (g_players[0].healthpoints <= 0) {
 					printf("%s is dead!\n", g_players[0].name);
 					// game over
 					gameOver();
-
+					system("pause");
 					return 1;
 				}
 
@@ -241,7 +248,10 @@ int interfaceCombat(void) {
 
 				printf("%s attacks %s for %d points of damage (%d absorbed)!\n", g_players[0].name, g_turn_order->first->data->name, damage, g_players[0].defence);
 				g_turn_order->first->data->healthpoints -= damage;
-				printf("%s has %d HP.\n", g_turn_order->first->data->name, g_turn_order->first->data->healthpoints);
+				printf("%s has", g_turn_order->first->data->name);
+				SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_RED);
+				printf(" %d HP ", g_turn_order->first->data->healthpoints);
+				SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 
 				if (g_turn_order->first->data->healthpoints <= 0) {
 					printf("%s is dead!\n", g_turn_order->first->data->name);

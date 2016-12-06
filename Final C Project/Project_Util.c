@@ -23,6 +23,25 @@ bool check_valid_move(int x, int y)
 	return false;
 }
 
+void main_menu()
+{
+	int choice = 0;
+	printf("Welcome to the game of \"Random Paradox Grinder\"\n\nChoose Diffuculty\n1) Easy\n2) Medium\n3) Hard\n");
+	do
+	{
+		scanf_s("%d", &choice);
+		switch (choice)
+		{
+		case 1: level_multiplier = 1;
+			break;
+		case 2: level_multiplier = 1.5;
+			break;
+		case 3: level_multiplier = 2;
+			break;
+		default: break;
+		}
+	} while (choice < 1 || choice>3);
+}
 
 void set_closest_distance(int posx1, int posy1, int posx2, int posy2, int *x, int *y)
 {
