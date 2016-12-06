@@ -211,6 +211,9 @@ void monsterKill(void) {
 	field_set_cell(deq->data->posx, deq->data->posy, FIELD_GROUND_CHAR);
 
 	printf("%s received %d experience and healed %d HP!\n", g_players[0].name, 1, 10);
+
+	free(deq->data);
+	free(deq);
 }
 
 int interfaceCombat(void) {
@@ -220,6 +223,9 @@ int interfaceCombat(void) {
 	h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	do {
+		if (g_turn_order->first == NULL) {
+			break;
+		}
 		if (g_turn_order->first->data) {
 			// if player is within range of the monster
 			if (util_distance(g_turn_order->first->data->posx, g_turn_order->first->data->posy, g_players[0].posx, g_players[0].posy) < 2) {
@@ -255,12 +261,12 @@ int interfaceCombat(void) {
 
 				if (g_turn_order->first->data->healthpoints <= 0) {
 					printf("%s is dead!\n", g_turn_order->first->data->name);
-					// monster killed
-					monsterKill();
 
 					if (tmp == g_turn_order->first) {
-						break;
+						tmp = g_turn_order->first->next;
 					}
+					// monster killed
+					monsterKill();
 				}
 			}
 		}
@@ -270,8 +276,12 @@ int interfaceCombat(void) {
 		
 		kill_flag = 0;
 		printf("\n");
-	} while (tmp != g_turn_order->first && g_turn_order->first != NULL);
-	if (q_isEmpty(g_turn_order) && g_floor == 2) return 1;
+	} while (
+				g_turn_order != NULL
+				&& tmp != g_turn_order->first
+				&& g_turn_order->first != NULL
+			);
+
 	return 0;
 }
 

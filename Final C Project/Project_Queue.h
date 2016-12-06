@@ -20,7 +20,7 @@ typedef struct Queue {
 
 queue* q_new(void);
 void q_insert(queue **myqueue, monster *data);
-monster* q_cicle_queue(queue **myqueue);
+void q_cicle_queue(queue **myqueue);
 void q_enqueue(queue **myqueue, monster *data);
 qnode* q_dequeue(queue **myqueue);
 int q_delete(queue **myqueue);

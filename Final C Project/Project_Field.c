@@ -117,7 +117,7 @@ void monsterspawner()
 	monster *mon;
 	int i, j, r, ctr = 0;
 
-	srand(time(0));
+	srand((unsigned)time(0));
 
 	do
 	{

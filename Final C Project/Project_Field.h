@@ -23,6 +23,8 @@ queue *g_turn_order;
 
 void read_file(const char *file_name, int count[]);
 
+bool checkformonster(int x, int y);
+bool field_is_valid_pos(int x, int y);
 void field_set_cell(int x, int y, char ch);
 
 void print_field(void);
