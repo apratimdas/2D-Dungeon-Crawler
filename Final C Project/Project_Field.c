@@ -109,6 +109,9 @@ void resetmonsters()
 		}
 		tmp = tmp->next;
 	}
+
+	q_delete(&g_turn_order);
+	g_turn_order = q_new();
 }
 
 //Need to modify spawn location here
