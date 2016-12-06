@@ -63,27 +63,46 @@ void q_insert(queue **myqueue, monster *data) {
 	}
 }
 
-//monster* q_cicle_queue(queue **myqueue) {
-//	monster* tmp;
-//
-//	tmp = q_dequeue(myqueue);
-//
-//	if (tmp) {
-//
-//	}
-//}
-
-monster* q_enqueue(queue **myqueue) {
+monster* q_cicle_queue(queue **myqueue) {
+	if (!q_isEmpty(**myqueue)) { // if not empty queue
+		if (!((*myqueue)->first == (*myqueue)->last)) {
+			(*myqueue)->last->next = (*myqueue)->first;
+			(*myqueue)->first = (*myqueue)->first->next;
+			(*myqueue)->last = (*myqueue)->last->next;
+			(*myqueue)->last->next = NULL;
+		}
+	}
 }
 
-monster* q_dequeue(queue **myqueue) {
-	monster* tmp = NULL;
+// adds to the end of the queue
+void q_enqueue(queue **myqueue, monster *data) {
+	qnode *newnode = NULL; //
+	qnode *tmp = NULL;
+
+	newnode = (qnode*)malloc(sizeof(qnode));
+
+	newnode->data = data;
+	newnode->next = NULL;
+
+	if (q_isEmpty(**myqueue)) { // empty queue
+		(*myqueue)->last = newnode;
+		(*myqueue)->first = (*myqueue)->last;
+	}
+	else {
+		(*myqueue)->last->next = newnode;
+		(*myqueue)->last = newnode;
+	}
+}
+
+// returns the first node (remember to free outside the function)
+qnode* q_dequeue(queue **myqueue) {
+	qnode* tmpnode = NULL;
 
 	if (q_isEmpty(**myqueue)) {
 		printf("Queue is Empty\n");
 	}
 	else {
-		tmp = (*myqueue)->first->data;
+		tmpnode = (*myqueue)->first;
 
 		if ((*myqueue)->first == (*myqueue)->last) {
 			(*myqueue)->first = (*myqueue)->last = NULL;
@@ -97,9 +116,10 @@ monster* q_dequeue(queue **myqueue) {
 		}
 	}
 
-	return tmp;
+	return tmpnode;
 }
 
+// frees whole queue
 int q_delete(queue **myqueue) {
 	qnode *tmp = NULL;
 

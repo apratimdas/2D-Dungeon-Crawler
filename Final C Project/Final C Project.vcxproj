@@ -116,6 +116,7 @@
     <ClCompile Include="Project_Player.c" />
     <ClCompile Include="Project_Queue.c" />
     <ClCompile Include="Project_Source.c" />
+    <ClCompile Include="Project_Util.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Project_Field.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="Project_Monster.h" />
     <ClInclude Include="Project_Player.h" />
     <ClInclude Include="Project_Queue.h" />
+    <ClInclude Include="Project_Util.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="field1.txt" />

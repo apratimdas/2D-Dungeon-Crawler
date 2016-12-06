@@ -33,6 +33,9 @@
     <ClCompile Include="Project_Source.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Project_Util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Project_Field.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Project_Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project_Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

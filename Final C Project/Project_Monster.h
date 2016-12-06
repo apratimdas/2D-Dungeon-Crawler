@@ -6,9 +6,10 @@
 
 #define MAXMONSTERS 5
 #define MONSTERVARIETY 5
+#define MONSTER_NAME_SIZE 25
 
 typedef struct Monster {
-    char name[25];
+    char name[MONSTER_NAME_SIZE];
 	char character;
     int healthpoints;
     int level;
@@ -24,5 +25,7 @@ typedef struct Monster {
 
 monster g_monsters[MONSTERVARIETY];
 monster g_spawns[MAXMONSTERS];
+
+void monster_copy_data(monster **dest, monster *orig);
 
 #endif // _PROJECT_MONSTER_H_

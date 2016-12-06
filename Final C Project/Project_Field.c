@@ -71,6 +71,8 @@ void read_file(const char *file_name, int count[]) {
 				for (int i = 0; i < MAXPLAYERS; i++) {
 					g_players[i].posx = rows; // maybe create set functions
 					g_players[i].posy = cols;
+
+					field_set_cell(rows, cols, FIELD_BLOCK_CHAR);
 					//printf("%d, %d, %d\n", rows, cols, g_players[i].posx);
 				}
 			}
@@ -166,33 +168,41 @@ int getmonsterindex(int x, int y)
 	return -1;
 }
 
-/*
+bool field_is_valid_pos(int x, int y) {
+	return (x < g_rows && x >= 0 && y < g_cols && y >= 0);
+}
+
+void field_set_cell(int x, int y, char ch) {
+	if (field_is_valid_pos(x, y)) {
+		g_field[x][y] = ch;
+	}
+}
+
 void print_field(void) {
-    for (int i = 0; i < g_rows; i++) {
-        for (int j = 0; j < g_cols; j++) {
-			if (checkformonster(i, j))
-			{
+	for (int i = 0; i < g_rows; i++) {
+		for (int j = 0; j < g_cols; j++) {
+			if (checkformonster(i, j)) {
 				//add color
 				//SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_RED);
-				//printf("%c", g_field[i][j]);
+				printf("%c", g_field[i][j]);
 				//SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 			}
 			else if (i == g_players[0].posx && j == g_players[0].posy) {
 				printf("%c", PLAYERMARKER);
 			}
-            else if (g_field[i][j] == '0' || g_field[i][j] == '1' || g_field[i][j] == 'S') {
-                printf(" ");
-            }
-            else {
+			else if (g_field[i][j] == '0' || g_field[i][j] == '1' || g_field[i][j] == 'S') {
+				//printf(" ");
+				printf("%c", g_field[i][j]);
+			}
+			else {
 				//SetConsoleTextAttribute(h, FOREGROUND_GREEN | BACKGROUND_RED);
-                //printf("%c", g_field[i][j]);
-            }
-        }
+				printf("%c", g_field[i][j]);
+			}
+		}
 
-        printf("\n");
-    }
+		printf("\n");
+	}
 }
-*/
 
 void print_viewport(void) {
 
@@ -279,6 +289,8 @@ void checkforladder(int row, int col, int count[])
 		read_file(temp, count);
 	}
 }
+
+
 
 // void dataInput(void) {
 //     for (int i = 0; i < MAXPLAYERS; i++) {

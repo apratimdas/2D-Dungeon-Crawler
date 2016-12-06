@@ -4,6 +4,7 @@
 #include "Project_Player.h"
 #include "Project_Field.h"
 #include "Project_Queue.h"
+#include "Project_Util.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -37,12 +38,18 @@ void test_queue(void) {
 		tmp = tmp->next;
 	}
 
-	for (int i = 0; i < 5; i++) {
-		tmpmonster = q_dequeue(&myq);
+	q_cicle_queue(&myq);
+	q_cicle_queue(&myq);
 
-		if (tmpmonster != NULL) {
-			printf("Test monster %d\n", tmpmonster->speed);
+	for (int i = 0; i < 5; i++) {
+		tmp = q_dequeue(&myq);
+
+		if (tmp != NULL) {
+			printf("Test monster %d\n", tmp->data->speed);
 		}
+
+		free(tmp);
+		tmp = NULL;
 	}
 
 	q_delete(&myq);
@@ -60,6 +67,7 @@ void test(void) {
 	do {
 		system("cls");
 		printf("Name:\t%s\nHP:\t%d\nAttack:\t%d\n\n", g_players[0].name, g_players[0].healthpoints, g_players[0].attack);
+		//print_field();
 		print_viewport();
 		printf("\nPress X to exit.\n");
 		choice = keyActions(0, count);
@@ -75,6 +83,11 @@ void movemonsterdirection(int i, int dir)
 	int x, y, flag = 0, ctr = 0;
 	x = g_spawns[i].posx;
 	y = g_spawns[i].posy;
+	
+	field_set_cell(x, y, FIELD_GROUND_CHAR);
+	//testmdg
+	//printf("M (%c) x = %d, y = %d, dist = %lf, %lf\n", g_spawns[i].character, x, y,
+	//util_distance(x, y, g_players[0].posx, g_players[0].posy), util_distance(x+1, y, g_players[0].posx, g_players[0].posy));
 	do
 	{
 		switch (dir)
@@ -82,35 +95,40 @@ void movemonsterdirection(int i, int dir)
 		case 0:
 			if (g_field[x][y - 1] == FIELD_GROUND_CHAR)
 			{
-				g_spawns[i].posy = y - 1;
+				g_spawns[i].posy = y = y - 1;
 				flag = 1;
 			}
 			break;
 		case 1:
 			if (g_field[x][y + 1] == FIELD_GROUND_CHAR)
 			{
-				g_spawns[i].posy = y + 1;
+				g_spawns[i].posy = y = y + 1;
 				flag = 1;
 			}
 			break;
 		case 2:
 			if (g_field[x - 1][y] == FIELD_GROUND_CHAR)
 			{
-				g_spawns[i].posx = x - 1;
+				g_spawns[i].posx = x = x - 1;
 				flag = 1;
 			}
 			break;
 		case 3:
 			if (g_field[x + 1][y] == FIELD_GROUND_CHAR)
 			{
-				g_spawns[i].posx = x + 1;
+				g_spawns[i].posx = x = x + 1;
 				flag = 1;
 			}
 			break;
+		case 4: // in case the monster choose to or cannot move
+			flag = 1;
+			break;
 		}
-		dir = rand() % 4;
+
+		dir = rand() % 5;
 	} while (flag == 0);
 	
+	field_set_cell(x, y, FIELD_BLOCK_CHAR);
 }
 
 void movemonsters()
@@ -155,6 +173,9 @@ char keyActions(int index, int count[]) {
 		break;
 	}
 	//Need to add monster collision conditions here
+	
+	field_set_cell(row, col, FIELD_GROUND_CHAR);
+	field_set_cell(g_players[index].posx, g_players[index].posy, FIELD_BLOCK_CHAR);
 
 	return key;
 }
