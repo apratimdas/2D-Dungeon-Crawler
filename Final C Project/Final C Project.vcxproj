@@ -22,6 +22,7 @@
     <ProjectGuid>{D18EEAA1-B56F-4FB6-B876-9D74D25B7D4B}</ProjectGuid>
     <RootNamespace>FinalCProject</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>2D Dungeon Crawler</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
